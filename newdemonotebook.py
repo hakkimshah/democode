@@ -41,3 +41,8 @@ df= spark.read.csv("dbfs:/mnt/hakkimdatalake/datalakecontainer/countrylookup.csv
 # COMMAND ----------
 
 display(df)
+
+# COMMAND ----------
+
+target_folder_path = "dbfs:/mnt/hakkimdatalake/datalakecontainer/Output"
+df.write.format("parquet").save(target_folder_path)
