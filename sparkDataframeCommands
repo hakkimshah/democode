@@ -1,0 +1,17 @@
+from pyspark.sql.functions import col
+input = spark.sparkContext.textFile("/FileStore/tables/part_00000.csv")
+words = input.flatMap(lambda x: x.split(","))
+words1 = words.map(lambda x:(x,1))
+word_count = words1.reduceByKey(lambda x,y:x+y)
+new = word_count.collect()
+for i in new:
+    print(i)
+
+
+df=spark.read.csv("/FileStore/tables/circuits.csv",header=True,inferSchema=True)
+#df1=df.filter(col('location')=="Istanbul")
+#display(df1)
+#df.select('name','circuitid').withColumnRenamed('circuitid','Id').show()
+#df.createOrReplaceTempView("CurciutTable")
+#spark.sql("select * from CurciutTable").show(10,100)
+df.sort('name').show(10,100)
